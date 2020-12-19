@@ -1,0 +1,29 @@
+{
+  "id":"deltics.interfaces",
+  "version":"",
+  "summary":"Provides base classes for various interfaced objects, fixing bugs in the equivalent classes in older versions of Delphi.",
+  "tags":[
+    "deltics",
+    "interfaces"
+  ],
+  "copyright":"\u00A92020 Jolyon Direnko-Smith",
+  "language":"en",
+  "content":"source",
+  "dependencies":[
+    "deltics.inc:1.0.4",
+    "deltics.multicast:1.0.0"
+  ],
+  "source":{
+      "files":[
+        "src\\deltics.interfaces.inc",
+        "src\\Deltics.Interfaces.pas",
+        "src\\Deltics.Interfaces.ComInterfacedObject.pas",
+        "src\\Deltics.Interfaces.ComInterfacedPersistent.pas",
+        "src\\Deltics.Interfaces.FlexInterfacedObject.pas",
+        "src\\Deltics.Interfaces.InterfacedObject.pas",
+        "src\\Deltics.Interfaces.InterfacedPersistent.pas",
+        "src\\Deltics.Interfaces.InterfaceRef.pas",
+        "src\\Deltics.Interfaces.WeakInterfaceRef.pas"
+      ]
+    }
+}
