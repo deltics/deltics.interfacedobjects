@@ -13,24 +13,23 @@ interface
   type
     TComInterfacedObject = class(TObject, IUnknown,
                                           IOn_Destroy)
-      // IOn_Destroy
-      private
-        fDestroying: Boolean;
-        fRefCount: Integer;
-        fOn_Destroy: IOn_Destroy;
-        function get_On_Destroy: IOn_Destroy;
+    private
+      fDestroying: Boolean;
+      fRefCount: Integer;
+    private // IOn_Destroy
+      fOn_Destroy: IOn_Destroy;
+      function get_On_Destroy: IOn_Destroy;
+    private // IUnknown
+      function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
+      function _AddRef: Integer; stdcall;
+      function _Release: Integer; stdcall;
 
-      public // IUnknown
-        function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
-        function _AddRef: Integer; stdcall;
-        function _Release: Integer; stdcall;
-
-      public
-        class function NewInstance: TObject; override;
-        procedure AfterConstruction; override;
-        procedure BeforeDestruction; override;
-        property RefCount: Integer read fRefCount;
-        property On_Destroy: IOn_Destroy read get_On_Destroy implements IOn_Destroy;
+    public
+      class function NewInstance: TObject; override;
+      procedure AfterConstruction; override;
+      procedure BeforeDestruction; override;
+      property RefCount: Integer read fRefCount;
+      property On_Destroy: IOn_Destroy read get_On_Destroy implements IOn_Destroy;
     end;
 
 
