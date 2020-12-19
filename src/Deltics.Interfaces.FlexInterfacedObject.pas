@@ -94,6 +94,10 @@ implementation
   class function TFlexInterfacedObject.NewInstance: TObject;
   begin
     result := inherited NewInstance;
+
+    // Set an initial refcount of 1 to protect against automatic
+    //  disposal if interface references to the new object are used
+    //  in the constructor (will be decremented AFTER construction)
     TFlexInterfacedObject(result).fRefCount := 1;
   end;
 
@@ -111,24 +115,16 @@ implementation
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TFlexInterfacedObject._AddRef: Integer;
   begin
-    if fRefCountDisabled then
-      result := 1
-    else
-      result := InterlockedIncrement(fRefCount);
+    result := InterlockedIncrement(fRefCount);
   end;
 
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TFlexInterfacedObject._Release: Integer;
   begin
-    if fRefCountDisabled then
-      result := 1
-    else
-    begin
-      result := InterlockedDecrement(fRefCount);
-      if (result = 0) then
-        Destroy;
-    end;
+    result := InterlockedDecrement(fRefCount);
+    if (result = 0) and NOT fRefCountDisabled then
+      Destroy;
   end;
 
 
