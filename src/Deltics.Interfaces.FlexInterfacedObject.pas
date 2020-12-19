@@ -24,6 +24,7 @@ interface
       public
         procedure DisableRefCount;
         property RefCount: Integer read fRefCount;
+        property RefCountDisabled: Boolean read fRefCountDisabled;
 
       // IUnknown
       protected
