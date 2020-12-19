@@ -78,6 +78,9 @@ implementation
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   procedure TComInterfacedObject.BeforeDestruction;
   begin
+    if (fRefCount <> 0) then
+      System.Error(reInvalidPtr);
+
     fDestroying := TRUE;
     inherited;
   end;
