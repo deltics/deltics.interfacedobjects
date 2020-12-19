@@ -1,4 +1,5 @@
 
+{$i deltics.inc}
 
 unit Test.ComInterfacedObject;
 
@@ -16,7 +17,7 @@ interface
     published
       procedure SetupMethod;
       procedure ComInterfacedObjectLifetimeIsReferenceCounted;
-      procedure InterfacedObjectLifetimeIsExplicit;
+      procedure ComInterfacedObjectLifetimeIsExplicit;
     end;
 
 
@@ -42,17 +43,17 @@ implementation
   end;
 
 
-  procedure TComInterfacedObjectTests.InterfacedObjectLifetimeIsExplicit;
+  procedure TComInterfacedObjectTests.ComInterfacedObjectLifetimeIsExplicit;
   var
     sut: TComInterfacedObject;
     intf: IUnknown;
     iod: IOn_Destroy;
   begin
-    Test.RaisesException(EInvalidPointer);
+    Test.RaisesException({$ifdef 64BIT} EAccessViolation {$else} EInvalidPointer {$endif});
 
     sut := TComInterfacedObject.Create;
     try
-      iod := sut.On_Destroy;
+      iod := sut as IOn_Destroy;
       iod.Add(OnDestroyCallCounter);
       iod := NIL;
 
@@ -74,7 +75,7 @@ implementation
   begin
     sut := TComInterfacedObject.Create;
 
-    iod := sut.On_Destroy;
+    iod := sut as IOn_Destroy;
     iod.Add(OnDestroyCallCounter);
     iod := NIL;
 

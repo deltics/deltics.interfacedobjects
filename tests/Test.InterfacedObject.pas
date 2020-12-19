@@ -70,7 +70,7 @@ implementation
     intf: IUnknown;
     iod: IOn_Destroy;
   begin
-    sut   := TInterfacedObject.Create;
+    sut := TInterfacedObject.Create;
     try
       iod := sut.On_Destroy;
       iod.Add(OnDestroyCallCounter);
