@@ -1,13 +1,13 @@
 
 {$i deltics.interfaces.inc}
 
-  unit Deltics.Interfaces.WeakInterfaceRef;
+  unit Deltics.Interfaces.WeakInterfaceReference;
 
 
 interface
 
   type
-    TWeakInterfaceRef = class(TObject, IUnknown)
+    TWeakInterfaceReference = class(TObject, IUnknown)
     private
       fRef: Pointer;
       function get_Ref: IUnknown;
@@ -32,7 +32,7 @@ implementation
 { TWeakInterfaceRef ------------------------------------------------------------------------------ }
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
-  constructor TWeakInterfaceRef.Create(const aRef: IInterface);
+  constructor TWeakInterfaceReference.Create(const aRef: IInterface);
   begin
     inherited Create;
 
@@ -41,14 +41,14 @@ implementation
 
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
-  function TWeakInterfaceRef.get_Ref: IUnknown;
+  function TWeakInterfaceReference.get_Ref: IUnknown;
   begin
     result := IUnknown(fRef);
   end;
 
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
-  procedure TWeakInterfaceRef.Update(const aRef: IInterface);
+  procedure TWeakInterfaceReference.Update(const aRef: IInterface);
   begin
     fRef := Pointer(aRef);
   end;

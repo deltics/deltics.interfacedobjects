@@ -22,8 +22,8 @@
         "src\\Deltics.Interfaces.FlexInterfacedObject.pas",
         "src\\Deltics.Interfaces.InterfacedObject.pas",
         "src\\Deltics.Interfaces.InterfacedPersistent.pas",
-        "src\\Deltics.Interfaces.InterfaceRef.pas",
-        "src\\Deltics.Interfaces.WeakInterfaceRef.pas"
+        "src\\Deltics.Interfaces.InterfaceReference.pas",
+        "src\\Deltics.Interfaces.WeakInterfaceReference.pas"
       ]
     }
 }

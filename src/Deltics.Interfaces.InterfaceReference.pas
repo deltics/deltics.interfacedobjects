@@ -1,13 +1,13 @@
 
 {$i deltics.interfaces.inc}
 
-  unit Deltics.Interfaces.InterfaceRef;
+  unit Deltics.Interfaces.InterfaceReference;
 
 
 interface
 
   type
-    TInterfaceRef = class(TObject, IUnknown)
+    TInterfaceReference = class(TObject, IUnknown)
     private
       fRef: IUnknown;
     protected // IUnknown
@@ -20,7 +20,7 @@ interface
       property Ref: IUnknown read fRef implements IUnknown;
     public
       constructor Create(const aRef: IUnknown);
-      function IsEqual(const aOther: IUnknown): Boolean;
+      function IsReferenceTo(const aOther: IUnknown): Boolean;
     end;
 
 
@@ -32,7 +32,7 @@ implementation
 { TInterfaceRef ---------------------------------------------------------------------------------- }
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
-  constructor TInterfaceRef.Create(const aRef: IInterface);
+  constructor TInterfaceReference.Create(const aRef: IInterface);
   begin
     inherited Create;
 
@@ -41,7 +41,7 @@ implementation
 
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
-  function TInterfaceRef.IsEqual(const aOther: IInterface): Boolean;
+  function TInterfaceReference.IsReferenceTo(const aOther: IInterface): Boolean;
   begin
     if Assigned(self) then
       result := (aOther as IUnknown) = fRef

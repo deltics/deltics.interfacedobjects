@@ -12,8 +12,8 @@ interface
     Deltics.Interfaces.FlexInterfacedObject,
     Deltics.Interfaces.InterfacedObject,
     Deltics.Interfaces.InterfacedPersistent,
-    Deltics.Interfaces.InterfaceRef,
-    Deltics.Interfaces.WeakInterfaceRef;
+    Deltics.Interfaces.InterfaceReference,
+    Deltics.Interfaces.WeakInterfaceReference;
 
   type
     TComInterfacedObject      = Deltics.Interfaces.ComInterfacedObject.TComInterfacedObject;
@@ -22,8 +22,8 @@ interface
     TInterfacedObject         = Deltics.Interfaces.InterfacedObject.TInterfacedObject;
     TInterfacedPersistent     = Deltics.Interfaces.InterfacedPersistent.TInterfacedPersistent;
 
-    TInterfaceRef             = Deltics.Interfaces.InterfaceRef.TInterfaceRef;
-    TWeakInterfaceRef         = Deltics.Interfaces.WeakInterfaceRef.TWeakInterfaceRef;
+    TInterfaceReference       = Deltics.Interfaces.InterfaceReference.TInterfaceReference;
+    TWeakInterfaceReference   = Deltics.Interfaces.WeakInterfaceReference.TWeakInterfaceReference;
 
 
 implementation
