@@ -14,14 +14,16 @@ uses
   Deltics.Interfaces.FlexInterfacedObject in '..\src\Deltics.Interfaces.FlexInterfacedObject.pas',
   Deltics.Interfaces.InterfacedObject in '..\src\Deltics.Interfaces.InterfacedObject.pas',
   Deltics.Interfaces.InterfacedPersistent in '..\src\Deltics.Interfaces.InterfacedPersistent.pas',
-  Deltics.Interfaces.InterfaceRef in '..\src\Deltics.Interfaces.InterfaceRef.pas',
-  Deltics.Interfaces.WeakInterfaceRef in '..\src\Deltics.Interfaces.WeakInterfaceRef.pas',
+  Deltics.Interfaces.InterfaceReference in '..\src\Deltics.Interfaces.InterfaceReference.pas',
+  Deltics.Interfaces.WeakInterfaceReference in '..\src\Deltics.Interfaces.WeakInterfaceReference.pas',
   Test.InterfacedObject in 'Test.InterfacedObject.pas',
   Test.ComInterfacedObject in 'Test.ComInterfacedObject.pas',
-  Test.FlexInterfacedObject in 'Test.FlexInterfacedObject.pas';
+  Test.FlexInterfacedObject in 'Test.FlexInterfacedObject.pas',
+  Test.InterfaceReference in 'Test.InterfaceReference.pas';
 
 begin
   TestRun.Test(TInterfacedObjectTests);
   TestRun.Test(TComInterfacedObjectTests);
   TestRun.Test(TFlexInterfacedObjectTests);
+  TestRun.Test(TInterfaceReferenceTests);
 end.
