@@ -89,10 +89,19 @@ implementation
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TComInterfacedObject.get_On_Destroy: IOn_Destroy;
   begin
-    if NOT Assigned(fOn_Destroy) then
+    // We must NOT create an On_Destroy event if we are being destroyed
+    //  otherwise it will be orphaned (i.e. leaked)
+
+    if NOT fDestroying and NOT Assigned(fOn_Destroy) then
       fOn_Destroy := TOnDestroy.Create(self);
 
     result := fOn_Destroy;
+  end;
+
+
+  function TComInterfacedObject.get_ReferenceCount: Integer;
+  begin
+    result := fReferenceCount;
   end;
 
 
@@ -100,7 +109,7 @@ implementation
   class function TComInterfacedObject.NewInstance: TObject;
   begin
     result := inherited NewInstance;
-    InterlockedIncrement(TComInterfacedObject(result).fRefCount);
+    InterlockedIncrement(TComInterfacedObject(result).fReferenceCount);
   end;
 
 
