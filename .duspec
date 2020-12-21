@@ -1,5 +1,5 @@
 {
-  "id":"deltics.interfaces",
+  "id":"deltics.interfacedobjects",
   "version":"",
   "summary":"Provides base classes for various interfaced objects, fixing bugs in the equivalent classes in older versions of Delphi.",
   "tags":[
@@ -23,7 +23,8 @@
         "src\\Deltics.Interfaces.InterfacedObject.pas",
         "src\\Deltics.Interfaces.InterfacedPersistent.pas",
         "src\\Deltics.Interfaces.InterfaceReference.pas",
-        "src\\Deltics.Interfaces.WeakInterfaceReference.pas"
+        "src\\Deltics.Interfaces.WeakInterfaceReference.pas",
+        "src\\Deltics.Interfaces.IReferenceCount.pas"
       ]
     }
 }
