@@ -43,10 +43,7 @@ implementation
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TInterfaceReference.IsReferenceTo(const aOther: IInterface): Boolean;
   begin
-    if Assigned(self) then
-      result := (aOther as IUnknown) = fRef
-    else
-      result := (aOther = NIL);
+    result := (aOther as IUnknown) = fRef
   end;
 
 
