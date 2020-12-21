@@ -1,0 +1,7 @@
+{
+  references: [
+    "&..\\.duspec",
+    "deltics.smoketest:2.4.0",
+    "fastmm:4.99.1"
+  ]
+}
