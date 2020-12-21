@@ -7,15 +7,17 @@
 interface
 
   uses
+    Deltics.Interfaces.IReferenceCount,
     Deltics.Multicast;
 
 
   type
     TComInterfacedObject = class(TObject, IUnknown,
+                                          IReferenceCount,
                                           IOn_Destroy)
     private
       fDestroying: Boolean;
-      fRefCount: Integer;
+      fReferenceCount: Integer;
     private // IOn_Destroy
       fOn_Destroy: IOn_Destroy;
       function get_On_Destroy: IOn_Destroy;
@@ -23,12 +25,14 @@ interface
       function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
       function _AddRef: Integer; stdcall;
       function _Release: Integer; stdcall;
+    private // IReferenceCount
+      function get_ReferenceCount: Integer;
 
     public
       class function NewInstance: TObject; override;
       procedure AfterConstruction; override;
       procedure BeforeDestruction; override;
-      property RefCount: Integer read fRefCount;
+      property ReferenceCount: Integer read fReferenceCount;
       property On_Destroy: IOn_Destroy read get_On_Destroy implements IOn_Destroy;
     end;
 
@@ -47,7 +51,7 @@ implementation
   function TComInterfacedObject._AddRef: Integer;
   begin
     if NOT (fDestroying) then
-      result := InterlockedIncrement(fRefCount)
+      result := InterlockedIncrement(fReferenceCount)
     else
       result := 1;
   end;
@@ -58,7 +62,7 @@ implementation
   begin
     if NOT (fDestroying) then
     begin
-      result := InterlockedDecrement(fRefCount);
+      result := InterlockedDecrement(fReferenceCount);
       if (result = 0) then
         Destroy;
     end
@@ -71,14 +75,14 @@ implementation
   procedure TComInterfacedObject.AfterConstruction;
   begin
     inherited;
-    InterlockedDecrement(fRefCount);
+    InterlockedDecrement(fReferenceCount);
   end;
 
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   procedure TComInterfacedObject.BeforeDestruction;
   begin
-    if (fRefCount <> 0) then
+    if (fReferenceCount <> 0) then
       System.Error(reInvalidPtr);
 
     fDestroying := TRUE;
