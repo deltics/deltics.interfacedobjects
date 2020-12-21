@@ -14,17 +14,18 @@ interface
     TFlexInterfacedObject = class(TObject, IUnknown,
                                            IOn_Destroy)
       private
-        fRefCount: Integer;
-        fRefCountDisabled: Boolean;
+        fDestroying: Boolean;
+        fReferenceCount: Integer;
+        fReferenceCountDisabled: Boolean;
       public
         procedure AfterConstruction; override;
         procedure BeforeDestruction; override;
         class function NewInstance: TObject; override;
 
       public
-        procedure DisableRefCount;
-        property RefCount: Integer read fRefCount;
-        property RefCountDisabled: Boolean read fRefCountDisabled;
+        procedure DisableReferenceCount;
+        property ReferenceCount: Integer read fReferenceCount;
+        property ReferenceCountDisabled: Boolean read fReferenceCountDisabled;
 
       // IUnknown
       protected
@@ -53,37 +54,41 @@ implementation
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   procedure TFlexInterfacedObject.AfterConstruction;
   begin
-    if fRefCountDisabled then
+    if fReferenceCountDisabled then
       EXIT;
 
     // Release the constructor's implicit refcount
-    InterlockedDecrement(fRefCount);
+    InterlockedDecrement(fReferenceCount);
   end;
 
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   procedure TFlexInterfacedObject.BeforeDestruction;
   begin
-    if NOT fRefCountDisabled and (fRefCount <> 0) then
+    if NOT fReferenceCountDisabled and (fReferenceCount <> 0) then
       System.Error(reInvalidPtr);
 
-    DisableRefCount;  // To avoid problems if we reference ourselves (or are
-                      //  referenced by others) using an interface during
-                      //  execution of the destructor chain
+    fDestroying             := TRUE;
+    fReferenceCountDisabled := TRUE;
+
+    inherited;
   end;
 
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
-  procedure TFlexInterfacedObject.DisableRefCount;
+  procedure TFlexInterfacedObject.DisableReferenceCount;
   begin
-    fRefCountDisabled := TRUE;
+    fReferenceCountDisabled := TRUE;
   end;
 
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TFlexInterfacedObject.get_On_Destroy: IOn_Destroy;
   begin
-    if NOT Assigned(fOn_Destroy) then
+    // We must NOT create an On_Destroy event if we are being destroyed
+    //  otherwise it will be orphaned (i.e. leaked)
+
+    if NOT fDestroying and NOT Assigned(fOn_Destroy) then
       fOn_Destroy := TOnDestroy.Create(self);
 
     result := fOn_Destroy;
@@ -98,7 +103,7 @@ implementation
     // Set an initial refcount of 1 to protect against automatic
     //  disposal if interface references to the new object are used
     //  in the constructor (will be decremented AFTER construction)
-    TFlexInterfacedObject(result).fRefCount := 1;
+    TFlexInterfacedObject(result).fReferenceCount := 1;
   end;
 
 
@@ -115,15 +120,15 @@ implementation
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TFlexInterfacedObject._AddRef: Integer;
   begin
-    result := InterlockedIncrement(fRefCount);
+    result := InterlockedIncrement(fReferenceCount);
   end;
 
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TFlexInterfacedObject._Release: Integer;
   begin
-    result := InterlockedDecrement(fRefCount);
-    if (result = 0) and NOT fRefCountDisabled then
+    result := InterlockedDecrement(fReferenceCount);
+    if (result = 0) and NOT fReferenceCountDisabled then
       Destroy;
   end;
 

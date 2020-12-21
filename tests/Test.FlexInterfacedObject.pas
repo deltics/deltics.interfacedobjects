@@ -64,7 +64,7 @@ implementation
   begin
     sut := TFlexInterfacedObject.Create;
 
-    Test('RefCountDisabled').Assert(NOT sut.RefCountDisabled);
+    Test('RefCountDisabled').Assert(NOT sut.ReferenceCountDisabled);
 
     sut.Free;
   end;
@@ -82,7 +82,7 @@ implementation
       iod.Add(OnDestroyCallCounter);
       iod := NIL;
 
-      sut.DisableRefCount;
+      sut.DisableReferenceCount;
 
       intf  := sut;
       intf  := NIL;
