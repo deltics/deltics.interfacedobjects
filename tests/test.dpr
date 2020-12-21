@@ -19,11 +19,14 @@ uses
   Test.InterfacedObject in 'Test.InterfacedObject.pas',
   Test.ComInterfacedObject in 'Test.ComInterfacedObject.pas',
   Test.FlexInterfacedObject in 'Test.FlexInterfacedObject.pas',
-  Test.InterfaceReference in 'Test.InterfaceReference.pas';
+  Test.InterfaceReference in 'Test.InterfaceReference.pas',
+  Test.WeakInterfaceReference in 'Test.WeakInterfaceReference.pas',
+  Deltics.Interfaces.IReferenceCount in '..\src\Deltics.Interfaces.IReferenceCount.pas';
 
 begin
   TestRun.Test(TInterfacedObjectTests);
   TestRun.Test(TComInterfacedObjectTests);
   TestRun.Test(TFlexInterfacedObjectTests);
   TestRun.Test(TInterfaceReferenceTests);
+  TestRun.Test(TWeakInterfaceReferenceTests);
 end.

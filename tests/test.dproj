@@ -47,7 +47,7 @@
     <PropertyGroup Condition="'$(Base)'!=''">
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
         <DCC_MapFile>3</DCC_MapFile>
-        <DCC_Define>debug_delticsinterfaces;debug_delticsmulticast;$(DCC_Define)</DCC_Define>
+        <DCC_Define>debug_delticsinterfaces;debug_delticsmulticast;FullDebugMode;$(DCC_Define)</DCC_Define>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <Manifest_File>None</Manifest_File>
         <VerInfo_Locale>1033</VerInfo_Locale>
@@ -110,6 +110,8 @@
         <DCCReference Include="Test.ComInterfacedObject.pas"/>
         <DCCReference Include="Test.FlexInterfacedObject.pas"/>
         <DCCReference Include="Test.InterfaceReference.pas"/>
+        <DCCReference Include="Test.WeakInterfaceReference.pas"/>
+        <DCCReference Include="..\src\Deltics.Interfaces.IReferenceCount.pas"/>
         <None Include=".duget"/>
         <None Include="..\.duspec"/>
         <None Include="..\.gitignore"/>
@@ -185,16 +187,16 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment>
-                <DeployFile LocalName="Win32\Debug\test.rsm" Configuration="Debug" Class="DebugSymbols">
-                    <Platform Name="Win32">
-                        <RemoteName>test.rsm</RemoteName>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="Win32\Debug\test.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32"/>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
                     <Platform Name="OSX32"/>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Debug\test.rsm" Configuration="Debug" Class="DebugSymbols">
+                    <Platform Name="Win32">
+                        <RemoteName>test.rsm</RemoteName>
+                    </Platform>
                 </DeployFile>
                 <DeployClass Required="true" Name="ProjectOutput">
                     <Platform Name="OSX32">
@@ -264,9 +266,9 @@
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
+                <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
-                <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
             </Deployment>
             <Platforms>
                 <Platform value="OSX32">False</Platform>
