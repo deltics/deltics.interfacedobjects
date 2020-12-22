@@ -15,16 +15,16 @@
   ],
   "source":{
       "files":[
-        "src\\deltics.interfaces.inc",
-        "src\\Deltics.Interfaces.pas",
-        "src\\Deltics.Interfaces.ComInterfacedObject.pas",
-        "src\\Deltics.Interfaces.ComInterfacedPersistent.pas",
-        "src\\Deltics.Interfaces.FlexInterfacedObject.pas",
-        "src\\Deltics.Interfaces.InterfacedObject.pas",
-        "src\\Deltics.Interfaces.InterfacedPersistent.pas",
-        "src\\Deltics.Interfaces.InterfaceReference.pas",
-        "src\\Deltics.Interfaces.WeakInterfaceReference.pas",
-        "src\\Deltics.Interfaces.IReferenceCount.pas"
+        "src\\deltics.interfacedObjects.inc",
+        "src\\Deltics.InterfacedObjects.pas",
+        "src\\Deltics.InterfacedObjects.ComInterfacedObject.pas",
+        "src\\Deltics.InterfacedObjects.ComInterfacedPersistent.pas",
+        "src\\Deltics.InterfacedObjects.FlexInterfacedObject.pas",
+        "src\\Deltics.InterfacedObjects.InterfacedObject.pas",
+        "src\\Deltics.InterfacedObjects.InterfacedPersistent.pas",
+        "src\\Deltics.InterfacedObjects.InterfaceReference.pas",
+        "src\\Deltics.InterfacedObjects.WeakInterfaceReference.pas",
+        "src\\Deltics.InterfacedObjects.IReferenceCount.pas"
       ]
     }
 }
