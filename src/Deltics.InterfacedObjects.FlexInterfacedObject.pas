@@ -1,13 +1,14 @@
 
-{$i deltics.interfaces.inc}
+{$i deltics.interfacedobjects.inc}
 
-  unit Deltics.Interfaces.FlexInterfacedObject;
+  unit Deltics.InterfacedObjects.FlexInterfacedObject;
 
 
 interface
 
   uses
-    Deltics.Multicast;
+    Deltics.Multicast,
+    Deltics.InterfacedObjects.IReferenceCount;
 
 
   type

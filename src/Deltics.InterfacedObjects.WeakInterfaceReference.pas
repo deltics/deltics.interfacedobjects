@@ -1,7 +1,7 @@
 
-{$i deltics.interfaces.inc}
+{$i deltics.interfacedobjects.inc}
 
-  unit Deltics.Interfaces.WeakInterfaceReference;
+  unit Deltics.InterfacedObjects.WeakInterfaceReference;
 
 
 interface

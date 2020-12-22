@@ -28,7 +28,7 @@ interface
 implementation
 
   uses
-    Deltics.Interfaces,
+    Deltics.InterfacedObjects,
     Deltics.Multicast;
 
 

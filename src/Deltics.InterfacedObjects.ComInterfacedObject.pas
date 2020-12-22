@@ -1,13 +1,13 @@
 
-{$i deltics.interfaces.inc}
+{$i deltics.interfacedobjects.inc}
 
-  unit Deltics.Interfaces.ComInterfacedObject;
+  unit Deltics.InterfacedObjects.ComInterfacedObject;
 
 
 interface
 
   uses
-    Deltics.Interfaces.IReferenceCount,
+    Deltics.InterfacedObjects.IReferenceCount,
     Deltics.Multicast;
 
 
@@ -25,7 +25,7 @@ interface
       procedure BeforeDestruction; override;
 
     // IOn_Destroy
-x   protected
+    protected
       function get_On_Destroy: IOn_Destroy;
     public
       property On_Destroy: IOn_Destroy read get_On_Destroy implements IOn_Destroy;

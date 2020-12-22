@@ -25,7 +25,7 @@ implementation
 
   uses
     SysUtils,
-    Deltics.Interfaces,
+    Deltics.InterfacedObjects,
     Deltics.Multicast;
 
 

@@ -1,7 +1,7 @@
 
-{$i deltics.interfaces.inc}
+{$i deltics.interfacedobjects.inc}
 
-  unit Deltics.Interfaces.IReferenceCount;
+  unit Deltics.InterfacedObjects.IReferenceCount;
 
 
 interface

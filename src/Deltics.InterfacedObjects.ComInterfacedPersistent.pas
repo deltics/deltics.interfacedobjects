@@ -1,7 +1,7 @@
 
-{$i deltics.interfaces.inc}
+{$i deltics.interfacedobjects.inc}
 
-  unit Deltics.Interfaces.ComInterfacedPersistent;
+  unit Deltics.InterfacedObjects.ComInterfacedPersistent;
 
 
 interface

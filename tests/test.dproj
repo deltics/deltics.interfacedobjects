@@ -59,7 +59,7 @@
         <DCC_S>false</DCC_S>
         <DCC_F>false</DCC_F>
         <DCC_K>false</DCC_K>
-        <DCC_UnitSearchPath>__duget\deltics.inc-1.0.3;__duget\deltics.multicast-1.0.0;__duget\deltics.inc-1.0.4;__duget\fastmm-4.99.1;__duget\deltics.smoketest-2.4.0;__duget\..\..\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>__duget\deltics.multicast-1.0.0;__duget\deltics.inc-1.0.4;__duget\fastmm-4.99.1;__duget\deltics.smoketest-2.4.0;__duget\..\..\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_OSX32)'!=''">
         <DCC_UsePackage>bindcompfmx;DBXSqliteDriver;fmx;rtl;dbrtl;DbxClientDriver;IndySystem;bindcomp;DBXInterBaseDriver;DataSnapCommon;xmlrtl;ibxpress;DbxCommonDriver;IndyProtocols;dbxcds;DBXMySQLDriver;bindengine;soaprtl;bindcompdbx;FMXTee;CustomIPTransport;dsnap;IndyIPServer;fmxase;IndyCore;IndyIPCommon;CloudService;FmxTeeUI;inet;fmxobj;inetdbxpress;fmxdae;dbexpress;IndyIPClient;$(DCC_UsePackage)</DCC_UsePackage>
@@ -98,27 +98,27 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\src\Deltics.Interfaces.pas"/>
-        <DCCReference Include="..\src\Deltics.Interfaces.ComInterfacedObject.pas"/>
-        <DCCReference Include="..\src\Deltics.Interfaces.ComInterfacedPersistent.pas"/>
-        <DCCReference Include="..\src\Deltics.Interfaces.FlexInterfacedObject.pas"/>
-        <DCCReference Include="..\src\Deltics.Interfaces.InterfacedObject.pas"/>
-        <DCCReference Include="..\src\Deltics.Interfaces.InterfacedPersistent.pas"/>
-        <DCCReference Include="..\src\Deltics.Interfaces.InterfaceReference.pas"/>
-        <DCCReference Include="..\src\Deltics.Interfaces.WeakInterfaceReference.pas"/>
+        <DCCReference Include="..\src\Deltics.InterfacedObjects.pas"/>
+        <DCCReference Include="..\src\Deltics.InterfacedObjects.ComInterfacedObject.pas"/>
+        <DCCReference Include="..\src\Deltics.InterfacedObjects.ComInterfacedPersistent.pas"/>
+        <DCCReference Include="..\src\Deltics.InterfacedObjects.FlexInterfacedObject.pas"/>
+        <DCCReference Include="..\src\Deltics.InterfacedObjects.InterfacedObject.pas"/>
+        <DCCReference Include="..\src\Deltics.InterfacedObjects.InterfacedPersistent.pas"/>
+        <DCCReference Include="..\src\Deltics.InterfacedObjects.InterfaceReference.pas"/>
+        <DCCReference Include="..\src\Deltics.InterfacedObjects.WeakInterfaceReference.pas"/>
+        <DCCReference Include="..\src\Deltics.InterfacedObjects.IReferenceCount.pas"/>
         <DCCReference Include="Test.InterfacedObject.pas"/>
         <DCCReference Include="Test.ComInterfacedObject.pas"/>
         <DCCReference Include="Test.FlexInterfacedObject.pas"/>
         <DCCReference Include="Test.InterfaceReference.pas"/>
         <DCCReference Include="Test.WeakInterfaceReference.pas"/>
-        <DCCReference Include="..\src\Deltics.Interfaces.IReferenceCount.pas"/>
         <None Include=".duget"/>
         <None Include="..\.duspec"/>
         <None Include="..\.gitignore"/>
         <None Include="..\GitVersion.yml"/>
         <None Include="..\LICENSE"/>
         <None Include="..\README.md"/>
-        <None Include="..\src\deltics.interfaces.inc"/>
+        <None Include="..\src\deltics.interfacedobjects.inc"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -266,9 +266,9 @@
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
-                <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
             </Deployment>
             <Platforms>
                 <Platform value="OSX32">False</Platform>
