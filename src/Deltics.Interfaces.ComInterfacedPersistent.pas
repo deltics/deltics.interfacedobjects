@@ -13,9 +13,11 @@ interface
 
   type
     TComInterfacedPersistent = class(Classes.TInterfacedPersistent, IOn_Destroy)
-    // IOn_Destroy
     private
       fOn_Destroy: IOn_Destroy;
+
+    // IOn_Destroy
+    protected
       function get_On_Destroy: IOn_Destroy;
     public
       property On_Destroy: IOn_Destroy read get_On_Destroy implements IOn_Destroy;

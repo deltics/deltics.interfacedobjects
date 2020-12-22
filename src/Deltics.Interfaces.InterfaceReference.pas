@@ -10,7 +10,12 @@ interface
     TInterfaceReference = class(TObject, IUnknown)
     private
       fRef: IUnknown;
-    protected // IUnknown
+    public
+      constructor Create(const aRef: IUnknown);
+      function IsReferenceTo(const aOther: IUnknown): Boolean;
+
+    // IUnknown
+    protected
       {
         IUnknown is delegated to the contained reference using "implements"
          ALL methods of IUnknown are delegated to the fRef, meaning that
@@ -18,9 +23,6 @@ interface
          itself (it won't be).
       }
       property Ref: IUnknown read fRef implements IUnknown;
-    public
-      constructor Create(const aRef: IUnknown);
-      function IsReferenceTo(const aOther: IUnknown): Boolean;
     end;
 
 

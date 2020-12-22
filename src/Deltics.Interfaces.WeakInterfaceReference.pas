@@ -16,10 +16,16 @@ interface
     private
       fRef: Pointer;
       fOnDestroy: IOn_Destroy;
-      function get_OnDestroy: IOn_Destroy;
       function get_Ref: IUnknown;
       procedure OnTargetDestroyed(aSender: TObject);
-    protected // IUnknown
+    public
+      constructor Create(const aRef: IUnknown);
+      destructor Destroy; override;
+      procedure UpdateReference(const aRef: IUnknown);
+      function IsReferenceTo(const aOther: IUnknown): Boolean;
+
+    // IUnknown
+    protected
       {
         IUnknown is delegated to the contained reference using "implements"
          ALL methods of IUnknown are delegated to the fRef, meaning that
@@ -27,12 +33,11 @@ interface
          itself (it won't be).
       }
       property Ref: IUnknown read get_Ref implements IUnknown;
+
+    // IOn_Destroy
+    protected
+      function get_OnDestroy: IOn_Destroy;
       property On_Destroy: IOn_Destroy read get_OnDestroy implements IOn_Destroy;
-    public
-      constructor Create(const aRef: IUnknown);
-      destructor Destroy; override;
-      procedure UpdateReference(const aRef: IUnknown);
-      function IsReferenceTo(const aOther: IUnknown): Boolean;
     end;
 
 

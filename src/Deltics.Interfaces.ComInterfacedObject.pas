@@ -18,22 +18,29 @@ interface
     private
       fDestroying: Boolean;
       fReferenceCount: Integer;
-    private // IOn_Destroy
       fOn_Destroy: IOn_Destroy;
-      function get_On_Destroy: IOn_Destroy;
-    private // IUnknown
-      function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
-      function _AddRef: Integer; stdcall;
-      function _Release: Integer; stdcall;
-    private // IReferenceCount
-      function get_ReferenceCount: Integer;
-
     public
       class function NewInstance: TObject; override;
       procedure AfterConstruction; override;
       procedure BeforeDestruction; override;
-      property ReferenceCount: Integer read fReferenceCount;
+
+    // IOn_Destroy
+x   protected
+      function get_On_Destroy: IOn_Destroy;
+    public
       property On_Destroy: IOn_Destroy read get_On_Destroy implements IOn_Destroy;
+
+    // IUnknown
+    protected
+      function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
+      function _AddRef: Integer; stdcall;
+      function _Release: Integer; stdcall;
+
+    // IReferenceCount
+    protected
+      function get_ReferenceCount: Integer;
+    public
+      property ReferenceCount: Integer read fReferenceCount;
     end;
 
 

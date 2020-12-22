@@ -12,16 +12,17 @@ interface
 
   type
     TFlexInterfacedObject = class(TObject, IUnknown,
+                                           IReferenceCount,
                                            IOn_Destroy)
       private
         fDestroying: Boolean;
         fReferenceCount: Integer;
         fReferenceCountDisabled: Boolean;
+        fOn_Destroy: IOn_Destroy;
       public
         procedure AfterConstruction; override;
         procedure BeforeDestruction; override;
         class function NewInstance: TObject; override;
-
       public
         procedure DisableReferenceCount;
         property ReferenceCount: Integer read fReferenceCount;
@@ -33,13 +34,17 @@ interface
         function _AddRef: Integer; stdcall;
         function _Release: Integer; stdcall;
 
+      // IReferenceCount
+      protected
+        function get_ReferenceCount: Integer;
+
       // IOn_Destroy
-      private
-        fOn_Destroy: IOn_Destroy;
+      protected
         function get_On_Destroy: IOn_Destroy;
       public
         property On_Destroy: IOn_Destroy read get_On_Destroy implements IOn_Destroy;
     end;
+
 
 
 
@@ -92,6 +97,13 @@ implementation
       fOn_Destroy := TOnDestroy.Create(self);
 
     result := fOn_Destroy;
+  end;
+
+
+  { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
+  function TFlexInterfacedObject.get_ReferenceCount: Integer;
+  begin
+    result := fReferenceCount;
   end;
 
 

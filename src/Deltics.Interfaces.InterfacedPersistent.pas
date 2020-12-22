@@ -15,6 +15,9 @@ interface
   type
     TInterfacedPersistent = class(TPersistent, IUnknown,
                                                IOn_Destroy)
+      private
+        fOn_Destroy: IOn_Destroy;
+
       // IUnknown
       protected
         function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
@@ -22,8 +25,7 @@ interface
         function _Release: Integer; stdcall;
 
       // IOn_Destroy
-      private
-        fOn_Destroy: IOn_Destroy;
+      protected
         function get_On_Destroy: IOn_Destroy;
       public
         property On_Destroy: IOn_Destroy read get_On_Destroy implements IOn_Destroy;
