@@ -57,6 +57,8 @@ implementation
       iod.Add(OnDestroyCallCounter);
       iod := NIL;
 
+      Test('TComInterfaceObject.On_Destroy calls').Assert(fOnDestroyCallCount).Equals(0);
+
       intf  := sut;
       intf  := NIL;
 

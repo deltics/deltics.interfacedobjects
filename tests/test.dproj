@@ -6,7 +6,7 @@
         <MainSource>test.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <Platform Condition="'$(Platform)'==''">Win64</Platform>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Console</AppType>
     </PropertyGroup>
@@ -47,7 +47,7 @@
     <PropertyGroup Condition="'$(Base)'!=''">
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
         <DCC_MapFile>3</DCC_MapFile>
-        <DCC_Define>debug_delticsinterfaces;debug_delticsmulticast;FullDebugMode;$(DCC_Define)</DCC_Define>
+        <DCC_Define>debug_delticsinterfaces;debug_delticsinterfacedobjects;$(DCC_Define)</DCC_Define>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <Manifest_File>None</Manifest_File>
         <VerInfo_Locale>1033</VerInfo_Locale>
@@ -59,7 +59,7 @@
         <DCC_S>false</DCC_S>
         <DCC_F>false</DCC_F>
         <DCC_K>false</DCC_K>
-        <DCC_UnitSearchPath>__duget\deltics.inc-1.0.3;__duget\deltics.multicast-1.0.0;__duget\deltics.exceptions-1.1.0;__duget\deltics.inc-1.0.4;__duget\fastmm-4.99.1;__duget\deltics.smoketest-2.4.0;__duget\..\..\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>__duget\deltics.multicast-1.0.0;__duget\deltics.exceptions-1.1.0;__duget\deltics.inc-1.0.4;__duget\fastmm-4.99.1;__duget\..\..\..\..\fastmm5x;__duget\deltics.smoketest-2.4.0;__duget\..\..\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_OSX32)'!=''">
         <DCC_UsePackage>bindcompfmx;DBXSqliteDriver;fmx;rtl;dbrtl;DbxClientDriver;IndySystem;bindcomp;DBXInterBaseDriver;DataSnapCommon;xmlrtl;ibxpress;DbxCommonDriver;IndyProtocols;dbxcds;DBXMySQLDriver;bindengine;soaprtl;bindcompdbx;FMXTee;CustomIPTransport;dsnap;IndyIPServer;fmxase;IndyCore;IndyIPCommon;CloudService;FmxTeeUI;inet;fmxobj;inetdbxpress;fmxdae;dbexpress;IndyIPClient;$(DCC_UsePackage)</DCC_UsePackage>
@@ -99,6 +99,8 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="..\src\Deltics.InterfacedObjects.pas"/>
+        <DCCReference Include="..\src\Deltics.InterfacedObjects.Interfaces.IInterfacedObject.pas"/>
+        <DCCReference Include="..\src\Deltics.InterfacedObjects.Interfaces.IInterfacedObjectList.pas"/>
         <DCCReference Include="..\src\Deltics.InterfacedObjects.ObjectLifecycle.pas"/>
         <DCCReference Include="..\src\Deltics.InterfacedObjects.ComInterfacedObject.pas"/>
         <DCCReference Include="..\src\Deltics.InterfacedObjects.ComInterfacedPersistent.pas"/>
@@ -112,8 +114,6 @@
         <DCCReference Include="Test.InterfaceReference.pas"/>
         <DCCReference Include="Test.WeakInterfaceReference.pas"/>
         <DCCReference Include="Test.InterfacedObjectList.pas"/>
-        <DCCReference Include="..\src\Deltics.InterfacedObjects.Interfaces.IInterfacedObject.pas"/>
-        <DCCReference Include="..\src\Deltics.InterfacedObjects.Interfaces.IInterfacedObjectList.pas"/>
         <None Include=".duget"/>
         <None Include="..\.duspec"/>
         <None Include="..\.gitignore"/>

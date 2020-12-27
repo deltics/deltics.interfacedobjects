@@ -32,6 +32,9 @@ interface
       function get_IsReferenceCounted: Boolean; override;
       function get_Lifecycle: TObjectLifecycle; override;
       function get_ReferenceCount: Integer; override;
+
+    public
+      procedure Free; reintroduce;
     end;
 
 
@@ -40,7 +43,8 @@ interface
 implementation
 
   uses
-    Windows;
+    Windows,
+    SysUtils;
 
 
 { TComInterfacedObject --------------------------------------------------------------------------- }
@@ -97,6 +101,13 @@ implementation
   procedure TComInterfacedObject.DoDestroy;
   begin
     Destroy;
+  end;
+
+
+  { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
+  procedure TComInterfacedObject.Free;
+  begin
+    raise EInvalidPointer.Create('You must not explicitly free a COM interfaced object (or class derived from it).  Lifecycle of these objects is determined by reference counting.');
   end;
 
 
