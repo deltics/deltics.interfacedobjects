@@ -13,10 +13,12 @@ interface
   type
     IInterfacedObject = interface
     ['{567DDBF8-5758-4AE1-A706-2CEB70E8445D}']
+      function get_IsReferenceCounted: Boolean;
       function get_Lifecycle: TObjectLifecycle;
       function get_Object: TObject;
       function get_ReferenceCount: Integer;
       property AsObject: TObject read get_Object;
+      property IsReferenceCounted: Boolean read get_IsReferenceCounted;
       property Lifecycle: TObjectLifecycle read get_Lifecycle;
       property ReferenceCount: Integer read get_ReferenceCount;
     end;

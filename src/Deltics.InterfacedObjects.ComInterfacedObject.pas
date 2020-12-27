@@ -29,6 +29,7 @@ interface
 
     // IInterfacedObject overrides
     protected
+      function get_IsReferenceCounted: Boolean; override;
       function get_Lifecycle: TObjectLifecycle; override;
       function get_ReferenceCount: Integer; override;
     end;
@@ -100,12 +101,20 @@ implementation
 
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
+  function TComInterfacedObject.get_IsReferenceCounted: Boolean;
+  begin
+    result := TRUE;
+  end;
+
+
+  { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TComInterfacedObject.get_Lifecycle: TObjectLifecycle;
   begin
     result := olReferenceCOunted;
   end;
 
 
+  { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TComInterfacedObject.get_ReferenceCount: Integer;
   begin
     result := fReferenceCount;
