@@ -29,8 +29,12 @@ interface
 
     // IInterfacedObject overrides
     protected
+      function get_IsReferenceCounted: Boolean; override;
       function get_Lifecycle: TObjectLifecycle; override;
       function get_ReferenceCount: Integer; override;
+
+    public
+      procedure Free; reintroduce;
     end;
 
 
@@ -39,7 +43,8 @@ interface
 implementation
 
   uses
-    Windows;
+    Windows,
+    SysUtils;
 
 
 { TComInterfacedObject --------------------------------------------------------------------------- }
@@ -100,12 +105,27 @@ implementation
 
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
+  procedure TComInterfacedObject.Free;
+  begin
+    raise EInvalidPointer.Create('You must not explicitly free a COM interfaced object (or class derived from it).  Lifecycle of these objects is determined by reference counting.');
+  end;
+
+
+  { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
+  function TComInterfacedObject.get_IsReferenceCounted: Boolean;
+  begin
+    result := TRUE;
+  end;
+
+
+  { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TComInterfacedObject.get_Lifecycle: TObjectLifecycle;
   begin
     result := olReferenceCOunted;
   end;
 
 
+  { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TComInterfacedObject.get_ReferenceCount: Integer;
   begin
     result := fReferenceCount;

@@ -42,6 +42,8 @@ interface
         function _Release: Integer; virtual; stdcall;
 
       // IInterfacedObject
+      protected
+        function get_IsReferenceCounted: Boolean; virtual;
         function get_Lifecycle: TObjectLifecycle; virtual;
         function get_Object: TObject;
         function get_ReferenceCount: Integer; virtual;
@@ -92,6 +94,13 @@ implementation
     fIsBeingDestroyed := TRUE;
 
     inherited;
+  end;
+
+
+  { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
+  function TInterfacedObject.get_IsReferenceCounted: Boolean;
+  begin
+    result := FALSE;
   end;
 
 

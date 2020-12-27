@@ -70,7 +70,11 @@ implementation
       end;
 
     finally
-      sut.Free;
+      // Call the TObject.Free implementation on SUT (to bypass the reintroduced Free
+      //  which raises an exception when trying to Free a COM interfaced object) otherwise
+      //  the test will leak SUT.
+
+      TObject(sut).Free;
     end;
   end;
 

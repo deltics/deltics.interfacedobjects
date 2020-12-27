@@ -9,6 +9,8 @@ uses
   SysUtils,
   Deltics.Smoketest,
   Deltics.InterfacedObjects in '..\src\Deltics.InterfacedObjects.pas',
+  Deltics.InterfacedObjects.Interfaces.IInterfacedObject in '..\src\Deltics.InterfacedObjects.Interfaces.IInterfacedObject.pas',
+  Deltics.InterfacedObjects.Interfaces.IInterfacedObjectList in '..\src\Deltics.InterfacedObjects.Interfaces.IInterfacedObjectList.pas',
   Deltics.InterfacedObjects.ObjectLifecycle in '..\src\Deltics.InterfacedObjects.ObjectLifecycle.pas',
   Deltics.InterfacedObjects.ComInterfacedObject in '..\src\Deltics.InterfacedObjects.ComInterfacedObject.pas',
   Deltics.InterfacedObjects.ComInterfacedPersistent in '..\src\Deltics.InterfacedObjects.ComInterfacedPersistent.pas',
@@ -21,9 +23,7 @@ uses
   Test.ComInterfacedObject in 'Test.ComInterfacedObject.pas',
   Test.InterfaceReference in 'Test.InterfaceReference.pas',
   Test.WeakInterfaceReference in 'Test.WeakInterfaceReference.pas',
-  Test.InterfacedObjectList in 'Test.InterfacedObjectList.pas',
-  Deltics.InterfacedObjects.Interfaces.IInterfacedObject in '..\src\Deltics.InterfacedObjects.Interfaces.IInterfacedObject.pas',
-  Deltics.InterfacedObjects.Interfaces.IInterfacedObjectList in '..\src\Deltics.InterfacedObjects.Interfaces.IInterfacedObjectList.pas';
+  Test.InterfacedObjectList in 'Test.InterfacedObjectList.pas';
 
 begin
   TestRun.Test(TInterfacedObjectTests);
