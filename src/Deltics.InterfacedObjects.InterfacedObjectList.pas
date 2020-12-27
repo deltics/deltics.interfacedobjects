@@ -8,12 +8,12 @@ interface
 
   uses
     Contnrs,
-    Deltics.InterfacedObjects.ComInterfacedObject,
+    Deltics.InterfacedObjects.InterfacedObject,
     Deltics.InterfacedObjects.Interfaces.IInterfacedObjectList;
 
 
   type
-    TInterfacedObjectList = class(TComInterfacedObject, IInterfacedObjectList)
+    TInterfacedObjectList = class(TInterfacedObject)//, IInterfacedObjectList)
     private
       fItems: TObjectList;
       procedure OnItemDestroyed(aSender: TObject);
@@ -26,6 +26,7 @@ interface
       function get_Count: Integer;
       function get_Item(const aIndex: Integer): IUnknown;
       function get_Object(const aIndex: Integer): TObject;
+    public
       function Add(const aInterface: IInterface): Integer; overload;
       function Add(const aObject: TObject): Integer; overload;
       procedure Delete(const aIndex: Integer);
@@ -43,7 +44,7 @@ implementation
     Classes,
     SysUtils,
     Deltics.Multicast,
-    Deltics.InterfacedObjects.Interfaces.IInterfacedObject;
+    Deltics.InterfacedObjects;
 
 
 
@@ -103,6 +104,7 @@ implementation
   function TInterfacedObjectList.Add(const aObject: TObject): Integer;
   var
     item: TListItem;
+    intf: IInterfacedObject;
     onDestroy: IOn_Destroy;
   begin
     if (ReferenceCount = 0) then
@@ -115,7 +117,22 @@ implementation
     begin
       aObject.GetInterface(IUnknown, item.ItemInterface);
 
-      if Supports(aObject, IOn_Destroy, onDestroy) then
+      // If the object being added is reference counted then its presence in this
+      //  list ensures it will not be freed unless and until it is removed.
+      //
+      // But if the object is NOT reference counted then it could be destroyed
+      //  while in this list; we need to subscribe to its On_Destroy event so
+      //  that we can remove the item from the list if it is destroyed.
+      //
+      // NOTE: Subscribing to the On_Destroy of a reference counted object
+      //        establishes a mutual dependency between the list and the object
+      //        which causes a death-embrace when the list is destroyed.
+      //
+      //   i.e. Do NOT subscribe to reference counted object On_Destroy events!
+
+      if Supports(aObject, IInterfacedObject, intf)
+       and intf.IsReferenceCounted
+       and Supports(aObject, IOn_Destroy, onDestroy) then
         onDestroy.Add(OnItemDestroyed);
     end;
 
