@@ -11,20 +11,23 @@
   "content":"source",
   "dependencies":[
     "deltics.inc:1.0.4",
+    "deltics.exceptions:1.1.0",
     "deltics.multicast:1.0.0"
   ],
   "source":{
       "files":[
         "src\\deltics.interfacedObjects.inc",
         "src\\Deltics.InterfacedObjects.pas",
+        "src\\Deltics.InterfacedObjects.Interfaces.IInterfacedObject.pas",
+        "src\\Deltics.InterfacedObjects.Interfaces.IInterfacedObjectList.pas",
+        "src\\Deltics.InterfacedObjects.ObjectLifecycle.pas",
         "src\\Deltics.InterfacedObjects.ComInterfacedObject.pas",
         "src\\Deltics.InterfacedObjects.ComInterfacedPersistent.pas",
-        "src\\Deltics.InterfacedObjects.FlexInterfacedObject.pas",
         "src\\Deltics.InterfacedObjects.InterfacedObject.pas",
+        "src\\Deltics.InterfacedObjects.InterfacedObjectList.pas",
         "src\\Deltics.InterfacedObjects.InterfacedPersistent.pas",
         "src\\Deltics.InterfacedObjects.InterfaceReference.pas",
-        "src\\Deltics.InterfacedObjects.WeakInterfaceReference.pas",
-        "src\\Deltics.InterfacedObjects.IReferenceCount.pas"
+        "src\\Deltics.InterfacedObjects.WeakInterfaceReference.pas"
       ]
     }
 }
