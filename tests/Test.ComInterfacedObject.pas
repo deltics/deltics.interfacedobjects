@@ -49,7 +49,7 @@ implementation
     intf: IUnknown;
     iod: IOn_Destroy;
   begin
-    Test.RaisesException({$ifdef 64BIT} EAccessViolation {$else} EInvalidPointer {$endif});
+    Test.RaisesException(EInvalidPointer);
 
     sut := TComInterfacedObject.Create;
     try
