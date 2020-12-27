@@ -7,11 +7,13 @@
 interface
 
   uses
-    Deltics.Multicast;
+    Deltics.Multicast,
+    Deltics.InterfacedObjects.Interfaces.IInterfacedObject,
+    Deltics.InterfacedObjects.ObjectLifecycle;
 
 
   type
-    // @TInterfacedObject
+    // @TInterfacedObjectBase
     //
     //  Provides a base class for objects that implement interfaces but with
     //   explicit lifetime management (must be Free'd and are NOT reference
@@ -23,15 +25,28 @@ interface
     //   no references left.
     //
     TInterfacedObject = class(TObject, IUnknown,
+                                       IInterfacedObject,
                                        IOn_Destroy)
       private
+        fIsBeingDestroyed: Boolean;
         fOn_Destroy: IOn_Destroy;
+      protected
+        property IsBeingDestroyed: Boolean read fIsBeingDestroyed;
+      public
+        procedure BeforeDestruction; override;
 
       // IUnknown
       protected
         function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
-        function _AddRef: Integer; stdcall;
-        function _Release: Integer; stdcall;
+        function _AddRef: Integer; virtual; stdcall;
+        function _Release: Integer; virtual; stdcall;
+
+      // IInterfacedObject
+        function get_Lifecycle: TObjectLifecycle; virtual;
+        function get_Object: TObject;
+        function get_ReferenceCount: Integer; virtual;
+        property Lifecycle: TObjectLifecycle read get_Lifecycle;
+        property ReferenceCount: Integer read get_ReferenceCount;
 
       // IOn_Destroy
       protected
@@ -44,11 +59,11 @@ interface
 
 implementation
 
-{ TInterfacedObject ------------------------------------------------------------------------------ }
+{ TInterfacedObjectBase -------------------------------------------------------------------------- }
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TInterfacedObject.QueryInterface(const IID: TGUID;
-                                            out   Obj): HResult;
+                                                out   Obj): HResult;
   begin
     if GetInterface(IID, Obj) then
       Result := 0
@@ -72,6 +87,29 @@ implementation
 
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
+  procedure TInterfacedObject.BeforeDestruction;
+  begin
+    fIsBeingDestroyed := TRUE;
+
+    inherited;
+  end;
+
+
+  { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
+  function TInterfacedObject.get_Lifecycle: TObjectLifecycle;
+  begin
+    result := olExplicit;
+  end;
+
+
+  { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
+  function TInterfacedObject.get_Object: TObject;
+  begin
+    result := self;
+  end;
+
+
+  { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TInterfacedObject.get_On_Destroy: IOn_Destroy;
   // Create the multi-cast event on demand, since we cannot
   //  guarantee any particular constructor call order and there
@@ -79,11 +117,19 @@ implementation
   //  multi-cast event handlers are added before/after any call
   //  to a particular inherited constructor etc etc)
   begin
-    if NOT Assigned(fOn_Destroy) then
+    if NOT fIsBeingDestroyed and NOT Assigned(fOn_Destroy) then
       fOn_Destroy := TOnDestroy.Create(self);
 
     result := fOn_Destroy;
   end;
+
+
+  { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
+  function TInterfacedObject.get_ReferenceCount: Integer;
+  begin
+    result := 1;
+  end;
+
 
 
 

@@ -7,29 +7,46 @@
 interface
 
   uses
-    Deltics.InterfacedObjects.IReferenceCount,
+    Classes,
+    Deltics.InterfacedObjects.ObjectLifecycle,
+    Deltics.InterfacedObjects.Interfaces.IInterfacedObject,
+    Deltics.InterfacedObjects.Interfaces.IInterfacedObjectList,
     Deltics.InterfacedObjects.ComInterfacedObject,
     Deltics.InterfacedObjects.ComInterfacedPersistent,
-    Deltics.InterfacedObjects.FlexInterfacedObject,
     Deltics.InterfacedObjects.InterfacedObject,
+    Deltics.InterfacedObjects.InterfacedObjectList,
     Deltics.InterfacedObjects.InterfacedPersistent,
     Deltics.InterfacedObjects.InterfaceReference,
     Deltics.InterfacedObjects.WeakInterfaceReference;
 
   type
-    IReferenceCount           = Deltics.InterfacedObjects.IReferenceCount.IReferenceCount;
+    IInterfaceList = Classes.IInterfaceList;
+    TInterfaceList = Classes.TInterfaceList;
+
+    IInterfacedObject         = Deltics.InterfacedObjects.Interfaces.IInterfacedObject.IInterfacedObject;
+    IInterfacedObjectList     = Deltics.InterfacedObjects.Interfaces.IInterfacedObjectList.IInterfacedObjectList;
 
     TComInterfacedObject      = Deltics.InterfacedObjects.ComInterfacedObject.TComInterfacedObject;
     TComInterfacedPersistent  = Deltics.InterfacedObjects.ComInterfacedPersistent.TComInterfacedPersistent;
-    TFlexInterfacedObject     = Deltics.InterfacedObjects.FlexInterfacedObject.TFlexInterfacedObject;
     TInterfacedObject         = Deltics.InterfacedObjects.InterfacedObject.TInterfacedObject;
     TInterfacedPersistent     = Deltics.InterfacedObjects.InterfacedPersistent.TInterfacedPersistent;
 
     TInterfaceReference       = Deltics.InterfacedObjects.InterfaceReference.TInterfaceReference;
     TWeakInterfaceReference   = Deltics.InterfacedObjects.WeakInterfaceReference.TWeakInterfaceReference;
 
+    TInterfacedObjectList     = Deltics.InterfacedObjects.InterfacedObjectList.TInterfacedObjectList;
 
-    function GetReferenceCount(const aInterface: IInterface): Integer;
+  type
+    TObjectLifecycle = Deltics.InterfacedObjects.ObjectLifecycle.TObjectLifecycle;
+
+  const
+    olExplicit          = Deltics.InterfacedObjects.ObjectLifecycle.olExplicit;
+    olReferenceCounted  = Deltics.InterfacedObjects.ObjectLifecycle.olReferenceCounted;
+
+
+  function GetReferenceCount(const aInterface: IInterface): Integer;
+
+
 
 implementation
 
@@ -39,15 +56,17 @@ implementation
 
   function GetReferenceCount(const aInterface: IInterface): Integer;
   var
-    rc: IReferenceCount;
+    io: IInterfacedObject;
   begin
-    if Supports(aInterface, IReferenceCount, rc) then
-      result := rc.ReferenceCount
+    if Supports(aInterface, IInterfacedObject, io) then
+      result := io.ReferenceCount
     else
     begin
       aInterface._AddRef;
       result := aInterface._Release;
     end;
   end;
+
+
 
 end.
