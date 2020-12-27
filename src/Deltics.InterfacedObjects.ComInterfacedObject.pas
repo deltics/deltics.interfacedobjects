@@ -7,40 +7,30 @@
 interface
 
   uses
-    Deltics.InterfacedObjects.IReferenceCount,
-    Deltics.Multicast;
+    Deltics.InterfacedObjects.InterfacedObject,
+    Deltics.InterfacedObjects.ObjectLifecycle;
 
 
   type
-    TComInterfacedObject = class(TObject, IUnknown,
-                                          IReferenceCount,
-                                          IOn_Destroy)
+    TComInterfacedObject = class(TInterfacedObject)
     private
-      fDestroying: Boolean;
       fReferenceCount: Integer;
-      fOn_Destroy: IOn_Destroy;
+    protected
+      procedure DoDestroy; virtual;
     public
       class function NewInstance: TObject; override;
       procedure AfterConstruction; override;
       procedure BeforeDestruction; override;
 
-    // IOn_Destroy
-    protected
-      function get_On_Destroy: IOn_Destroy;
-    public
-      property On_Destroy: IOn_Destroy read get_On_Destroy implements IOn_Destroy;
-
     // IUnknown
     protected
-      function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
-      function _AddRef: Integer; stdcall;
-      function _Release: Integer; stdcall;
+      function _AddRef: Integer; override;
+      function _Release: Integer; override;
 
-    // IReferenceCount
+    // IInterfacedObject overrides
     protected
-      function get_ReferenceCount: Integer;
-    public
-      property ReferenceCount: Integer read fReferenceCount;
+      function get_Lifecycle: TObjectLifecycle; override;
+      function get_ReferenceCount: Integer; override;
     end;
 
 
@@ -57,7 +47,7 @@ implementation
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TComInterfacedObject._AddRef: Integer;
   begin
-    if NOT (fDestroying) then
+    if NOT (IsBeingDestroyed) then
       result := InterlockedIncrement(fReferenceCount)
     else
       result := 1;
@@ -67,11 +57,11 @@ implementation
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   function TComInterfacedObject._Release: Integer;
   begin
-    if NOT (fDestroying) then
+    if NOT (IsBeingDestroyed) then
     begin
       result := InterlockedDecrement(fReferenceCount);
       if (result = 0) then
-        Destroy;
+        DoDestroy;
     end
     else
       result := 1;
@@ -82,6 +72,12 @@ implementation
   procedure TComInterfacedObject.AfterConstruction;
   begin
     inherited;
+
+    // Now that the constructors are done, remove the reference count we added
+    //  in NewInstance - the reference count will typically be zero at this
+    //  point as a result, but will then get bumped back to 1 (one) by the
+    //  assignment of the constructed instance to some interface reference var
+
     InterlockedDecrement(fReferenceCount);
   end;
 
@@ -92,21 +88,21 @@ implementation
     if (fReferenceCount <> 0) then
       System.Error(reInvalidPtr);
 
-    fDestroying := TRUE;
     inherited;
   end;
 
 
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
-  function TComInterfacedObject.get_On_Destroy: IOn_Destroy;
+  procedure TComInterfacedObject.DoDestroy;
   begin
-    // We must NOT create an On_Destroy event if we are being destroyed
-    //  otherwise it will be orphaned (i.e. leaked)
+    Destroy;
+  end;
 
-    if NOT fDestroying and NOT Assigned(fOn_Destroy) then
-      fOn_Destroy := TOnDestroy.Create(self);
 
-    result := fOn_Destroy;
+  { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
+  function TComInterfacedObject.get_Lifecycle: TObjectLifecycle;
+  begin
+    result := olReferenceCOunted;
   end;
 
 
@@ -120,22 +116,13 @@ implementation
   class function TComInterfacedObject.NewInstance: TObject;
   begin
     result := inherited NewInstance;
+
+    // Ensure a minimum reference count of 1 during execution of the constructors
+    //  to protect against _Release destroying ourselves as a result of interface
+    //  references being passed around
+
     InterlockedIncrement(TComInterfacedObject(result).fReferenceCount);
   end;
-
-
-  { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
-  function TComInterfacedObject.QueryInterface(const IID: TGUID; out Obj): HResult;
-  begin
-    if GetInterface(IID, Obj) then
-      result := 0
-    else
-      result := E_NOINTERFACE;
-  end;
-
-
-
-
 
 
 
