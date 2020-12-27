@@ -8,12 +8,12 @@ interface
 
   uses
     Contnrs,
-    Deltics.InterfacedObjects.InterfacedObject,
-    Deltics.InterfacedObjects.Interfaces.IInterfacedObjectList;
+    Deltics.InterfacedObjects.Interfaces.IInterfacedObjectList,
+    Deltics.InterfacedObjects.ComInterfacedObject;
 
 
   type
-    TInterfacedObjectList = class(TInterfacedObject)//, IInterfacedObjectList)
+    TInterfacedObjectList = class(TComInterfacedObject, IInterfacedObjectList)
     private
       fItems: TObjectList;
       procedure OnItemDestroyed(aSender: TObject);
@@ -131,7 +131,7 @@ implementation
       //   i.e. Do NOT subscribe to reference counted object On_Destroy events!
 
       if Supports(aObject, IInterfacedObject, intf)
-       and intf.IsReferenceCounted
+       and (NOT intf.IsReferenceCounted)
        and Supports(aObject, IOn_Destroy, onDestroy) then
         onDestroy.Add(OnItemDestroyed);
     end;
