@@ -107,7 +107,11 @@ implementation
   { - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - }
   procedure TComInterfacedObject.Free;
   begin
-    raise EInvalidPointer.Create('You must not explicitly free a COM interfaced object (or class derived from it).  Lifecycle of these objects is determined by reference counting.');
+    if (fReferenceCount > 0) then
+      raise EInvalidPointer.Create('You must not explicitly free a COM interfaced object (or class '
+                                 + 'derived from it) where interface references have been '
+                                 + 'obtained.  The lifecycle of these objects is determined by '
+                                 + 'reference counting.');
   end;
 
 
