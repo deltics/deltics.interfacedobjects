@@ -112,6 +112,8 @@ implementation
                                  + 'derived from it) where interface references have been '
                                  + 'obtained.  The lifecycle of these objects is determined by '
                                  + 'reference counting.');
+
+    Destroy;
   end;
 
 
