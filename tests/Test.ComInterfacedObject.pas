@@ -17,7 +17,8 @@ interface
     published
       procedure SetupMethod;
       procedure ComInterfacedObjectLifetimeIsReferenceCounted;
-      procedure ComInterfacedObjectLifetimeIsExplicit;
+      procedure ComInterfacedObjectWithoutReferencesCanBeFreed;
+      procedure ComInterfacedObjectFreedAfterReferencesUsedRaisesEInvalidPointer;
     end;
 
 
@@ -43,14 +44,11 @@ implementation
   end;
 
 
-  procedure TComInterfacedObjectTests.ComInterfacedObjectLifetimeIsExplicit;
+  procedure TComInterfacedObjectTests.ComInterfacedObjectWithoutReferencesCanBeFreed;
   var
     sut: TComInterfacedObject;
-    intf: IUnknown;
     iod: IOn_Destroy;
   begin
-    Test.RaisesException(EInvalidPointer);
-
     sut := TComInterfacedObject.Create;
     try
       iod := sut as IOn_Destroy;
@@ -59,14 +57,36 @@ implementation
 
       Test('TComInterfaceObject.On_Destroy calls').Assert(fOnDestroyCallCount).Equals(0);
 
-      intf  := sut;
-      intf  := NIL;
-
+    finally
       sut.Free;
 
-    finally
       Test('TComInterfaceObject.On_Destroy calls').Assert(fOnDestroyCallCount).Equals(1);
     end;
+  end;
+
+
+  procedure TComInterfacedObjectTests.ComInterfacedObjectFreedAfterReferencesUsedRaisesEInvalidPointer;
+  var
+    sut: TComInterfacedObject;
+    intf: IUnknown;
+    iod: IOn_Destroy;
+  begin
+    Test.RaisedException(EInvalidPointer);
+
+    sut := TComInterfacedObject.Create;
+
+    iod := sut as IOn_Destroy;
+    iod.Add(OnDestroyCallCounter);
+    iod := NIL;
+
+    Test('TComInterfaceObject.On_Destroy calls').Assert(fOnDestroyCallCount).Equals(0);
+
+    intf  := sut;
+    intf  := NIL;
+
+    Test('TComInterfaceObject.On_Destroy calls').Assert(fOnDestroyCallCount).Equals(1);
+
+    sut.Free;
   end;
 
 
