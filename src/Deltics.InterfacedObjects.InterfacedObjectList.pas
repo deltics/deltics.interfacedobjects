@@ -107,7 +107,7 @@ implementation
     onDestroy: IOn_Destroy;
   begin
     if (ReferenceCount = 0) then
-      raise EInvalidOperation.Create('You appear to be using a reference counted object list via an object reference.  Reference counted lists MUST be used via an interface reference to avoid errors arising from the internal On_Destroy mechanism');
+      raise EInvalidOperation.Create('You appear to be using a reference counted object list via an object reference.  Reference counted object lists MUST be used via an interface reference to avoid errors arising from the internal On_Destroy mechanism');
 
     item := TListItem.Create;
     item.ItemObject := aObject;

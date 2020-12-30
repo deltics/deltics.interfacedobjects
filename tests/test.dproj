@@ -47,7 +47,7 @@
     <PropertyGroup Condition="'$(Base)'!=''">
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
         <DCC_MapFile>3</DCC_MapFile>
-        <DCC_Define>debug_delticsinterfaces;debug_delticsinterfacedobjects;$(DCC_Define)</DCC_Define>
+        <DCC_Define>debug_delticsinterfacedobjects;FullDebugMode;debug_delticssmoketest;$(DCC_Define)</DCC_Define>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <Manifest_File>None</Manifest_File>
         <VerInfo_Locale>1033</VerInfo_Locale>
