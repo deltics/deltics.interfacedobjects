@@ -15,6 +15,9 @@ interface
       procedure InterfacedObjectAddedToListIsRemovedWhenDestroyed;
       procedure AddingItemsViaObjectReferenceIsAnInvalidOperation;
       procedure AddingItemsViaInterfaceReferenceIsSuccessful;
+      procedure ItemsCanBeInsertedAtASpecificIndex;
+      procedure ItemsCannotBeAddedMoreThanOnce;
+      procedure ClearedListHasNoItems;
     end;
 
 
@@ -97,6 +100,83 @@ implementation
 
     Test('Count').Assert(sut.Count).Equals(0);
   end;
+
+
+  procedure TInterfacedObjectListTests.ItemsCanBeInsertedAtASpecificIndex;
+  var
+    sut: IInterfacedObjectList;
+    io1, io2, io3: TInterfacedObject;
+  begin
+    sut := TInterfacedObjectList.Create;
+    io1 := TInterfacedObject.Create;
+    io2 := TInterfacedObject.Create;
+    io3 := TInterfacedObject.Create;
+
+    Test('Count').Assert(sut.Count).Equals(0);
+
+    sut.Add(io1);
+    sut.Add(io2);
+    sut.Insert(1, io3);
+
+    Test('Count').Assert(sut.Count).Equals(3);
+    Test('Index (1st object)').Assert(sut.IndexOf(io1)).Equals(0);
+    Test('Index (2nd object)').Assert(sut.IndexOf(io2)).Equals(2);
+    Test('Index (3rd object)').Assert(sut.IndexOf(io3)).Equals(1);
+  end;
+
+
+  procedure TInterfacedObjectListTests.ItemsCannotBeAddedMoreThanOnce;
+  var
+    sut: IInterfacedObjectList;
+    io1, io2, io3: TInterfacedObject;
+    idx: Integer;
+  begin
+    sut := TInterfacedObjectList.Create;
+    io1 := TInterfacedObject.Create;
+    io2 := TInterfacedObject.Create;
+    io3 := TInterfacedObject.Create;
+
+    Test('Count').Assert(sut.Count).Equals(0);
+
+    sut.Add(io1);
+    sut.Add(io2);
+    sut.Add(io3);
+    idx := sut.IndexOf(io2);
+
+    Test('Count').Assert(sut.Count).Equals(3);
+    Test('Index (2nd object)').Assert(idx).Equals(1);
+
+    idx := sut.Add(io2);
+
+    Test('Count').Assert(sut.Count).Equals(3);
+    Test('Index (2nd object)').Assert(idx).Equals(1);
+  end;
+
+
+  procedure TInterfacedObjectListTests.ClearedListHasNoItems;
+  var
+    sut: IInterfacedObjectList;
+    io1, io2, io3: TInterfacedObject;
+  begin
+    sut := TInterfacedObjectList.Create;
+    io1 := TInterfacedObject.Create;
+    io2 := TInterfacedObject.Create;
+    io3 := TInterfacedObject.Create;
+
+    Test('Count').Assert(sut.Count).Equals(0);
+
+    sut.Add(io1);
+    sut.Add(io2);
+    sut.Add(io3);
+
+    Test('Count').Assert(sut.Count).Equals(3);
+
+    sut.Clear;
+
+    Test('Count').Assert(sut.Count).Equals(0);
+  end;
+
+
 
 
 end.
