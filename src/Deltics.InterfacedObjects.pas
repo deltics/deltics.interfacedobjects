@@ -45,6 +45,8 @@ interface
 
 
   function GetReferenceCount(const aInterface: IInterface): Integer;
+  function InterfaceCast(const aInterface: IUnknown; const aIID: TGuid; var ref): Boolean; overload;
+  function InterfaceCast(const aInterface: IUnknown; const aClass: TClass; var ref): Boolean; overload;
 
 
 
@@ -66,6 +68,27 @@ implementation
       result := aInterface._Release;
     end;
   end;
+
+
+  function InterfaceCast(const aInterface: IUnknown; const aIID: TGuid; var ref): Boolean;
+  begin
+    result  := Supports(aInterface, aIID, ref);
+  end;
+
+
+  function InterfaceCast(const aInterface: IUnknown; const aClass: TClass; var ref): Boolean;
+  var
+    objRef: TObject absolute ref;
+    impl: TObject;
+  begin
+    objRef  := NIL;
+
+    result  := Supports(aInterface, IInterfacedObject, impl) and (impl is aClass);
+
+    if result then
+      objRef := impl;
+  end;
+
 
 
 
