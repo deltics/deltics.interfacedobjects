@@ -79,14 +79,15 @@ implementation
   function InterfaceCast(const aInterface: IUnknown; const aClass: TClass; var ref): Boolean;
   var
     objRef: TObject absolute ref;
-    impl: TObject;
+    intf: IInterfacedObject;
   begin
     objRef  := NIL;
 
-    result  := Supports(aInterface, IInterfacedObject, impl) and (impl is aClass);
+    result  := Supports(aInterface, IInterfacedObject, intf);
+    result  := result and (intf.AsObject is aClass);
 
     if result then
-      objRef := impl;
+      objRef := intf.AsObject;
   end;
 
 
