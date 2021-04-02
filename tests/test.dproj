@@ -1,4 +1,4 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{EB2D0F10-A639-4A9D-AAF9-0269CF1B1B95}</ProjectGuid>
         <ProjectVersion>14.6</ProjectVersion>
@@ -47,7 +47,7 @@
     <PropertyGroup Condition="'$(Base)'!=''">
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
         <DCC_MapFile>3</DCC_MapFile>
-        <DCC_Define>debug_delticsinterfacedobjects;FullDebugMode;debug_delticssmoketest;$(DCC_Define)</DCC_Define>
+        <DCC_Define>FullDebugMode;debug_delticsinterfacedobjects;debug_delticssmoketest;$(DCC_Define)</DCC_Define>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <Manifest_File>None</Manifest_File>
         <VerInfo_Locale>1033</VerInfo_Locale>
@@ -59,7 +59,7 @@
         <DCC_S>false</DCC_S>
         <DCC_F>false</DCC_F>
         <DCC_K>false</DCC_K>
-        <DCC_UnitSearchPath>__duget\deltics.multicast-1.0.0;__duget\deltics.exceptions-1.1.0;__duget\deltics.inc-1.0.4;__duget\fastmm-4.99.1;__duget\..\..\..\..\fastmm5x;__duget\deltics.smoketest-2.4.0;__duget\..\..\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>__duget\fastmm-4.99.1;__duget\deltics.smoketest-2.9.1;__duget\deltics.multicast-1.0.0;__duget\deltics.inc-1.3.0;__duget\deltics.exceptions-1.1.0;__duget\..\..\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_OSX32)'!=''">
         <DCC_UsePackage>bindcompfmx;DBXSqliteDriver;fmx;rtl;dbrtl;DbxClientDriver;IndySystem;bindcomp;DBXInterBaseDriver;DataSnapCommon;xmlrtl;ibxpress;DbxCommonDriver;IndyProtocols;dbxcds;DBXMySQLDriver;bindengine;soaprtl;bindcompdbx;FMXTee;CustomIPTransport;dsnap;IndyIPServer;fmxase;IndyCore;IndyIPCommon;CloudService;FmxTeeUI;inet;fmxobj;inetdbxpress;fmxdae;dbexpress;IndyIPClient;$(DCC_UsePackage)</DCC_UsePackage>
@@ -114,6 +114,7 @@
         <DCCReference Include="Test.InterfaceReference.pas"/>
         <DCCReference Include="Test.WeakInterfaceReference.pas"/>
         <DCCReference Include="Test.InterfacedObjectList.pas"/>
+        <DCCReference Include="Test.InterfaceCasts.pas"/>
         <None Include=".duget"/>
         <None Include="..\.duspec"/>
         <None Include="..\.gitignore"/>

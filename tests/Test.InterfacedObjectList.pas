@@ -60,7 +60,7 @@ implementation
     sut: TInterfacedObjectListSubClassExposingAddMethod;
     io: TInterfacedObject;
   begin
-    Test.RaisesException(EInvalidOperation);
+    Test.Raises(EInvalidOperation);
 
     sut := TInterfacedObjectListSubClassExposingAddMethod.Create;
     try

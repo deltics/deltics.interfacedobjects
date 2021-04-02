@@ -71,7 +71,7 @@ implementation
     intf: IUnknown;
     iod: IOn_Destroy;
   begin
-    Test.RaisesException(EInvalidPointer);
+    Test.Raises(EInvalidPointer);
 
     sut := TComInterfacedObject.Create;
 
