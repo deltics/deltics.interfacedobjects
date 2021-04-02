@@ -23,7 +23,8 @@ uses
   Test.ComInterfacedObject in 'Test.ComInterfacedObject.pas',
   Test.InterfaceReference in 'Test.InterfaceReference.pas',
   Test.WeakInterfaceReference in 'Test.WeakInterfaceReference.pas',
-  Test.InterfacedObjectList in 'Test.InterfacedObjectList.pas';
+  Test.InterfacedObjectList in 'Test.InterfacedObjectList.pas',
+  Test.InterfaceCasts in 'Test.InterfaceCasts.pas';
 
 begin
   TestRun.Test(TInterfacedObjectTests);
@@ -31,4 +32,5 @@ begin
   TestRun.Test(TInterfaceReferenceTests);
   TestRun.Test(TWeakInterfaceReferenceTests);
   TestRun.Test(TInterfacedObjectListTests);
+  TestRun.Test(TInterfaceCastTests);
 end.
